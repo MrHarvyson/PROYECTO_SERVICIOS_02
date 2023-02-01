@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.vedruna.proyecto_servicios_02/com.vedruna.proyecto_servicios_02.HelloApplication
+                                com.vedruna.proyecto_servicios_02/com.vedruna.proyecto_servicios_02.LoginApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
