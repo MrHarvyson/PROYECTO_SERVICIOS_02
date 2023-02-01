@@ -1,4 +1,4 @@
-package com.vedruna.proyecto_servicios_02;
+package com.vedruna.proyectoServicios02;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
