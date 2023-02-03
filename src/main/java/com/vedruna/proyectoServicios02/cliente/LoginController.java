@@ -37,7 +37,7 @@ public class LoginController {
             System.out.println("introduce");
         } else {
             try {
-                int port = 8010;
+                int port = 7010;
                 InetAddress destino = InetAddress.getByName("localhost");
                 byte[] mensajeBytes = nickname.getText().getBytes();
                 DatagramPacket envio = new DatagramPacket(mensajeBytes, mensajeBytes.length, destino, port);
@@ -74,7 +74,7 @@ public class LoginController {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error al abrir chat");
         }
 
     }

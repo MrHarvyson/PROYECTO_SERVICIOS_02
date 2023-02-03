@@ -4,13 +4,10 @@ import java.net.InetAddress;
 
 public class Usuarios {
 
-    InetAddress direccion;
-    Integer puerto;
-    String nombre;
+    private InetAddress direccion;
+    private Integer puerto;
+    private String nombre;
 
-    public Usuarios(){
-
-    }
 
     public Usuarios(InetAddress direccion, Integer puerto, String nombre) {
         this.direccion = direccion;

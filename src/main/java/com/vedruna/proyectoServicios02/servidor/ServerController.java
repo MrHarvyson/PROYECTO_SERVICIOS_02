@@ -16,12 +16,17 @@ import java.util.ResourceBundle;
 
 public class ServerController implements Initializable {
 
-    private List<Usuarios> listaUsuarios =new LinkedList<>();
+    private final List<Usuarios> listaUsuarios =new LinkedList<Usuarios>();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ServerLoginHilo serverLoginHilo = new ServerLoginHilo(listaUsuarios);
         Thread hilo = new Thread(serverLoginHilo);
         hilo.start();
+
+        ServerChatHilo serverChatHilo = new ServerChatHilo(listaUsuarios);
+        Thread hilo2 = new Thread(serverChatHilo);
+        hilo2.start();
 
     }
 }
