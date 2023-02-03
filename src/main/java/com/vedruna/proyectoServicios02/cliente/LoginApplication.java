@@ -1,4 +1,4 @@
-package com.vedruna.proyectoServicios02;
+package com.vedruna.proyectoServicios02.cliente;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

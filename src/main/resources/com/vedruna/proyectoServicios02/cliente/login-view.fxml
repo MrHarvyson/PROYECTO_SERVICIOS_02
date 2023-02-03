@@ -5,12 +5,14 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.vedruna.proyectoServicios02.LoginController">
+      fx:controller="com.vedruna.proyectoServicios02.cliente.LoginController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
+    <TextField fx:id="nickname" maxHeight="30.0" maxWidth="120.0" promptText="Nick" />
+    <Label fx:id="labelError" textFill="RED" />
+    <Button fx:id="buttonLogin" onAction="#botonLogin" text="Iniciar sesión" />
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
 </VBox>
