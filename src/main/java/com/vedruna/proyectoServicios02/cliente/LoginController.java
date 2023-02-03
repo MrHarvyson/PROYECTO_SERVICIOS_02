@@ -19,13 +19,16 @@ public class LoginController {
 
     @FXML
     public Button buttonLogin;
+    @FXML
     public TextField nickname;
+    @FXML
     public Label labelError;
 
     public static DatagramSocket socket;
 
     {
         try {
+            // asignara un puerto aleatorio de envio del login al servidor
             socket = new DatagramSocket();
         } catch (SocketException e) {
             e.printStackTrace();
@@ -37,6 +40,7 @@ public class LoginController {
             System.out.println("introduce");
         } else {
             try {
+                // el login envia al puerto 7010 lso datos del cliente, el server esta escuchando por el
                 int port = 7010;
                 InetAddress destino = InetAddress.getByName("localhost");
                 byte[] mensajeBytes = nickname.getText().getBytes();
@@ -47,12 +51,14 @@ public class LoginController {
             }
         }
 
+        // lee el mensaje que envia servidor para dar respuesta de comprobacion
         byte[] bufer = new byte[1024];
         DatagramPacket recibo = new DatagramPacket(bufer, bufer.length);
         try {
             socket.receive(recibo);
             String paquete = new String(recibo.getData()).trim();
             if (paquete.equalsIgnoreCase("ok")) {
+                // si el nombre no se repite y el server nos da el ok abre la pantalla de chat
                 abrirChat();
                 System.out.println("deberia abrir");
             } else {

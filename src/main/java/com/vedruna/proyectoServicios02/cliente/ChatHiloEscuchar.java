@@ -25,6 +25,7 @@ public class ChatHiloEscuchar implements Runnable{
             try {
                 byte[] bufer = new byte[1024];
                 DatagramPacket recibo = new DatagramPacket(bufer, bufer.length);
+                // escuha por su puerto
                 LoginController.socket.receive(recibo);
                 String paquete = new String(recibo.getData()).trim();
                 if ("desconectar".equals(paquete)){

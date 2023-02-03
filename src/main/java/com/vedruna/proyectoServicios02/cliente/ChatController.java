@@ -27,8 +27,17 @@ public class ChatController implements Initializable {
     @FXML
     public TextField areaEscritor;
 
+    // cuando el chat se abra se inicia un hilo solo para escuchar lo que le llega del server
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ChatHiloEscuchar chatHiloEscuchar = new ChatHiloEscuchar(areaMostrador);
+        Thread hilo = new Thread(chatHiloEscuchar);
+        hilo.start();
+    }
+
     public void enviar(ActionEvent actionEvent) {
         String mensaje = areaEscritor.getText();
+        // el mensaje escrito por el chat se enviara al puerto 5010 del server
         int port = 5010;
         InetAddress destino = null;
         DatagramSocket socket = null;
@@ -45,10 +54,5 @@ public class ChatController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        ChatHiloEscuchar chatHiloEscuchar = new ChatHiloEscuchar(areaMostrador);
-        Thread hilo = new Thread(chatHiloEscuchar);
-        hilo.start();
-    }
+
 }
