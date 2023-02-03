@@ -1,4 +1,4 @@
-module com.vedruna.proyectoServicios02 {
+module com.vedruna.proyectoServicios {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -7,4 +7,5 @@ module com.vedruna.proyectoServicios02 {
     opens com.vedruna.proyectoServicios02.cliente to javafx.fxml;
     exports com.vedruna.proyectoServicios02.servidor;
     opens com.vedruna.proyectoServicios02.servidor to javafx.fxml;
+    exports com.vedruna.proyectoServicios02;
 }
