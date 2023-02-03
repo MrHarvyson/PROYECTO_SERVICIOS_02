@@ -18,12 +18,15 @@ public class ServerController implements Initializable {
 
     private final List<Usuarios> listaUsuarios =new LinkedList<Usuarios>();
 
+    // al iniciar el servidor crea los dos hilos
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // un hilo para escuchar los usuarios que se loggean
         ServerLoginHilo serverLoginHilo = new ServerLoginHilo(listaUsuarios);
         Thread hilo = new Thread(serverLoginHilo);
         hilo.start();
 
+        // otro hilo para mandar mensajes
         ServerChatHilo serverChatHilo = new ServerChatHilo(listaUsuarios);
         Thread hilo2 = new Thread(serverChatHilo);
         hilo2.start();
