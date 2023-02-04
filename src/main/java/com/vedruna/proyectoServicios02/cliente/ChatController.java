@@ -42,6 +42,7 @@ public class ChatController implements Initializable {
         ChatHiloEscuchar chatHiloEscuchar = new ChatHiloEscuchar(vbox_message);
         Thread hilo = new Thread(chatHiloEscuchar);
         hilo.start();
+
         //para enviar mensajes con tecla Enter
         tf_message.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -73,8 +74,8 @@ public class ChatController implements Initializable {
 
     }
 
-
     public void enviarMensaje() {
+
         if (!(tf_message.getText().equals(""))) {
             String mensaje = tf_message.getText();
             // el mensaje escrito por el chat se enviara al puerto 5010 del server

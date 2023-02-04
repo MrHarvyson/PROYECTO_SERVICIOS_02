@@ -80,6 +80,7 @@ public class LoginController {
             Stage stage = new Stage();
             stage.setTitle("Hello!");
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             System.out.println("Error al abrir chat");

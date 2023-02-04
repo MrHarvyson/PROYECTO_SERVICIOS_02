@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane hgap="5.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #ff8901;" vgap="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vedruna.proyectoServicios02.cliente.ChatController" >
+<GridPane hgap="5.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #ff8901;" vgap="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vedruna.proyectoServicios02.cliente.ChatController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />
     </columnConstraints>
@@ -16,9 +16,9 @@
     </rowConstraints>
     <children>
         <Label fx:id="labelNick" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="118.0" textAlignment="RIGHT" GridPane.halignment="RIGHT" />
-        <ScrollPane fx:id="sp_main" GridPane.rowIndex="1" fitToWidth="true">
+        <ScrollPane fx:id="sp_main" fitToWidth="true" style="-fx-background-color: #ff8901;" GridPane.rowIndex="1">
             <content>
-                <VBox fx:id="vbox_message" prefHeight="248" prefWidth="240.0" />
+                <VBox fx:id="vbox_message" prefHeight="248" prefWidth="240.0" style="-fx-background-color: #ff8901;" />
             </content>
         </ScrollPane>
         <TextField fx:id="tf_message" GridPane.rowIndex="2" />
@@ -29,4 +29,3 @@
         <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
     </padding>
 </GridPane>
-
