@@ -3,6 +3,7 @@ package com.vedruna.proyectoServicios02.cliente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,7 +27,7 @@ public class LoginController {
 
     public static DatagramSocket socket;
 
-    {
+    static {
         try {
             // asignara un puerto aleatorio de envio del login al servidor
             socket = new DatagramSocket();
@@ -58,14 +59,15 @@ public class LoginController {
             socket.receive(recibo);
             String paquete = new String(recibo.getData()).trim();
             if (paquete.equalsIgnoreCase("ok")) {
-                // si el nombre no se repite y el server nos da el ok abre la pantalla de chat
+                // si el nombre no se repite y el server nos da el ok abre la pantalla de chat y cierra el login
                 abrirChat();
+                cerrarPantalla(actionEvent);
                 System.out.println("deberia abrir");
             } else {
                 System.out.println("no se abre");
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error al enviar nick.");
         }
 
     }
@@ -83,5 +85,11 @@ public class LoginController {
             System.out.println("Error al abrir chat");
         }
 
+    }
+
+    private void cerrarPantalla(ActionEvent e) {
+        Node source = (Node) e.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 }
