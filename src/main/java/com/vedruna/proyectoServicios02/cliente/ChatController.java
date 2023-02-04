@@ -54,5 +54,4 @@ public class ChatController implements Initializable {
 
     }
 
-
 }
