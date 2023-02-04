@@ -1,5 +1,7 @@
 package com.vedruna.proyectoServicios02.servidor;
 import com.vedruna.proyectoServicios02.Usuarios;
+import javafx.application.Platform;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -16,7 +18,10 @@ public class ServerLoginHilo implements Runnable {
     @Override
     public void run() {
         try {
+            //Crea usuarios o cierra hilo
             crearUsuarios();
+            //Cuando termina el hilo, cierra ventana
+            Platform.exit();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -31,6 +36,12 @@ public class ServerLoginHilo implements Runnable {
             DatagramPacket usuarioPacket = new DatagramPacket(bufer, bufer.length);
             socketUsuario.receive(usuarioPacket);
             // nos llega la informacion del login del cliente y la enviamos para crear un usuario nuevo
+
+            String mensajeRecibido = new String(usuarioPacket.getData());
+            //ME QUEDE AQUI
+
+
+
             anadirUsuario(usuarioPacket);
             for (int i = 0; i < listaUsuarios.size(); i++) {
                 System.out.println(listaUsuarios.get(i).toString());
