@@ -76,7 +76,7 @@ public class LoginController {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("chat-view.fxml"));
         Scene scene = null;
         try {
-            scene = new Scene(fxmlLoader.load(), 320, 240);
+            scene = new Scene(fxmlLoader.load(), 300, 400);
             Stage stage = new Stage();
             stage.setTitle("Hello!");
             stage.setScene(scene);
