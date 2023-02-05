@@ -1,18 +1,7 @@
 package com.vedruna.proyectoServicios02.cliente;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-
 import java.io.IOException;
 import java.net.DatagramPacket;
 
@@ -43,7 +32,6 @@ public class ChatHiloEscuchar implements Runnable{
                     break;
                 }
                 ChatController.mostrarMensaje2(paquete,vbox_message);
-                //vbox_message.setText(vbox_message.getText() + paquete + "\n");
             } catch (IOException e) {
                 e.printStackTrace();
             }
