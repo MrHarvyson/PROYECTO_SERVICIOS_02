@@ -16,7 +16,11 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ServerController implements Initializable {
-
+    //muestra los mensajes enviados
+    public TextArea txtConsola;
+    //muestra los usuarios conectados
+    public TextArea txtUsuario;
+    //FALTA TEXTAREA PARA MOSTRAR LISTA DE CLIENTES
     private final List<Usuarios> listaUsuarios =new LinkedList<Usuarios>();
     public TextArea txtConsola;
     public TextArea txtUsuarios;
@@ -27,12 +31,12 @@ public class ServerController implements Initializable {
         txtConsola.setText("<<<<<-----   SERVIDOR LEVANTADO   ----->>>>>\n");
 
         // un hilo para escuchar los usuarios que se loggean
-        ServerLoginHilo serverLoginHilo = new ServerLoginHilo(listaUsuarios);
+        ServerLoginHilo serverLoginHilo = new ServerLoginHilo(listaUsuarios, txtUsuario);
         Thread hilo = new Thread(serverLoginHilo);
         hilo.start();
 
         // otro hilo para mandar mensajes
-        ServerChatHilo serverChatHilo = new ServerChatHilo(listaUsuarios);
+        ServerChatHilo serverChatHilo = new ServerChatHilo(listaUsuarios, txtConsola);
         Thread hilo2 = new Thread(serverChatHilo);
         hilo2.start();
 

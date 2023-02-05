@@ -15,10 +15,14 @@ public class LoginApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 300, 400);
         stage.setResizable(false);
-        stage.setTitle("Terra");
+        stage.setTitle(LoginController.nickname.getText());
         stage.setScene(scene);
         stage.getIcons().add(new Image("log.png"));
         stage.show();
+        //cierra el socket en caso de salirnos desde la primera ventana
+        stage.setOnCloseRequest(windowEvent -> {
+            LoginController.socket.close();
+        });
     }
 
     public static void main(String[] args) {
