@@ -23,19 +23,25 @@
         </ScrollPane>
       <GridPane prefHeight="56.0" prefWidth="261.0" GridPane.rowIndex="2">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="207.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="33.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="178.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="53.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="enviarMensaje" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#enviarMensaje" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+            <ImageView fx:id="enviarMensaje" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#enviarMensaje" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                <image>
                   <Image url="@enviar.png" />
                </image>
             </ImageView>
-              <TextField fx:id="tf_message" prefHeight="25.0" prefWidth="217.0" />
+              <TextField fx:id="tf_message" prefHeight="25.0" prefWidth="217.0" GridPane.columnIndex="1" />
+            <ImageView fx:id="enviarImagenn" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#enviarImagen" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@enviar.png" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
     </children>

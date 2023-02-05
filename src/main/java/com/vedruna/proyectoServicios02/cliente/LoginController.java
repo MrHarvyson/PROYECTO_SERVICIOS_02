@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class LoginController {
     @FXML
     public Button buttonLogin;
     @FXML
-    public static TextField nickname;
+    public TextField nickname;
     @FXML
     public Label labelError;
 
@@ -73,7 +74,8 @@ public class LoginController {
         try {
             scene = new Scene(fxmlLoader.load(), 300, 400);
             Stage stage = new Stage();
-            stage.setTitle("Hello!");
+            stage.setTitle(nickname.getText().toUpperCase());
+            stage.getIcons().add(new Image("log.png"));
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
