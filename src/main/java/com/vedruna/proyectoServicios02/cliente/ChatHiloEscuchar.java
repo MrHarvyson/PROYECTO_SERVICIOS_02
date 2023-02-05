@@ -1,18 +1,18 @@
 package com.vedruna.proyectoServicios02.cliente;
 
-import javafx.scene.control.TextArea;
-
+import javafx.fxml.FXML;
+import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.DatagramPacket;
 
 public class ChatHiloEscuchar implements Runnable{
+    @FXML
+    private final VBox vbox_message;
 
 
-    private final TextArea mostrador;
 
-
-    public ChatHiloEscuchar(TextArea mostrador) {
-        this.mostrador = mostrador;
+    public ChatHiloEscuchar(VBox vbox_message) {
+        this.vbox_message = vbox_message;
     }
     @Override
     public void run() {
@@ -33,11 +33,14 @@ public class ChatHiloEscuchar implements Runnable{
                 if ("desconectado".equals(paquete)){
                     break;
                 }
-                //concatena los mensajes entrantes
-                mostrador.setText(mostrador.getText() + paquete + "\n");
+
+                ChatController.mostrarMensaje2(paquete,vbox_message);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
+
+
 }

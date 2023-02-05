@@ -22,10 +22,14 @@ public class ServerController implements Initializable {
     public TextArea txtUsuario;
     //FALTA TEXTAREA PARA MOSTRAR LISTA DE CLIENTES
     private final List<Usuarios> listaUsuarios =new LinkedList<Usuarios>();
+    public TextArea txtConsola;
+    public TextArea txtUsuarios;
 
     // al iniciar el servidor crea los dos hilos
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        txtConsola.setText("<<<<<-----   SERVIDOR LEVANTADO   ----->>>>>\n");
+
         // un hilo para escuchar los usuarios que se loggean
         ServerLoginHilo serverLoginHilo = new ServerLoginHilo(listaUsuarios, txtUsuario);
         Thread hilo = new Thread(serverLoginHilo);
