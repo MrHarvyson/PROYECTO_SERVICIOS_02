@@ -2,7 +2,9 @@ package com.vedruna.proyectoServicios02.servidor;
 
 import com.vedruna.proyectoServicios02.Usuarios;
 import com.vedruna.proyectoServicios02.cliente.LoginController;
+import javafx.scene.control.TextArea;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -12,10 +14,13 @@ import java.util.List;
 
 public class ServerChatHilo implements Runnable{
 
+    public TextArea txtConsola;
+
     private List<Usuarios> listaUsuarios;
 
-    public ServerChatHilo(List<Usuarios> listaUsuarios) {
+    public ServerChatHilo(List<Usuarios> listaUsuarios, TextArea txtConsola) {
         this.listaUsuarios = listaUsuarios;
+        this.txtConsola = txtConsola;
     }
 
     public void run(){
@@ -35,19 +40,23 @@ public class ServerChatHilo implements Runnable{
                 int puertoMensajeRecibido = paqueteRecibido.getPort();
 
                 //si recibe de un cliente stop, sale del bucle y cierra el servidor
-                if(mensajeRecibido.equalsIgnoreCase("stop")){
+                if(mensajeRecibido.equalsIgnoreCase("stop")) {
                     cerrarServer();
                     break;
-                } else { //si no es un mensaje de cierre, reenvia los mensajes
+                } else if (esImagen(mensajeRecibido)) {
+                    txtConsola.setText(txtConsola.getText() + "Llegó una imagen a Descargas" + "\n");
+                    String rutaImagen = System.getProperty("user.home") + "\\Downloads\\" ;
+                    FileOutputStream fileOutputStream = new FileOutputStream(rutaImagen + "imagenRecibida.png");
+                    fileOutputStream.write(paqueteRecibido.getData());
+                    //fileOutputStream.close();   CERRAMOS FLUJO
+                } else { //si no es un mensaje de cierre o imagen, reenvia los mensajes
                     //obtenemos nick del cliente que envia
                     String clienteNick = obtenerNick(puertoMensajeRecibido);
                     //concatenamos el nick al mensaje para enviarlo al resto de clientes
                     String mensajeFinal = clienteNick + ": " + mensajeRecibido;
                     //enviamos el mensaje
                     enviarMensajes(mensajeFinal, puertoMensajeRecibido);
-
-                    //FALTA METER EL TEXTAREA PARA MOSTRARLO POR PANTALLA
-                    System.out.println(mensajeRecibido);
+                    txtConsola.setText(txtConsola.getText() + mensajeFinal + "\n");
                 }
 
             }
@@ -60,6 +69,9 @@ public class ServerChatHilo implements Runnable{
         }
     }
 
+    private boolean esImagen(String mensaje) {
+        return mensaje.contains("�PNG") || mensaje.contains("�JPG");
+    }
 
     private String obtenerNick(int port) {
         String nickCliente = "";
@@ -69,7 +81,6 @@ public class ServerChatHilo implements Runnable{
                 break;
             }
         }
-
         return nickCliente;
     }
 
@@ -79,35 +90,29 @@ public class ServerChatHilo implements Runnable{
 
         for (Usuarios usuarios : listaUsuarios) {
             if (!(usuarios.getPuerto() == puertoMensajeRecibido)) {
-                DatagramPacket paqueteEnvio = new DatagramPacket(data, data.length, InetAddress.getByName("localhost"), usuarios.getPuerto());
+                DatagramPacket paqueteEnvio = new DatagramPacket(data, data.length, usuarios.getDireccion(), usuarios.getPuerto());
                 socketEnvio.send(paqueteEnvio);
-                System.out.println("puerto que recibe " + usuarios.getPuerto());
             }
         }
         socketEnvio.close();
     }
 
-
-
     //cierra el servidor en caso de Stop
     private void cerrarServer() {
         DatagramSocket socketEnvio = null;
         try {
-            String mensajeFinal = "Servidor Cerrado";
+            String mensajeFinal = "Cerrando Servidor";
             byte[] data = (mensajeFinal).getBytes();
             socketEnvio = new DatagramSocket(1060);
 
             //envía a los clientes el mensaje de que se ha cerrado Server
             for (Usuarios usuario : listaUsuarios) {
-                InetAddress direccionCliente = usuario.getDireccion();
-                int puertoCliente = usuario.getPuerto();
-                DatagramPacket packet = new DatagramPacket(data, data.length, direccionCliente, puertoCliente);
+                DatagramPacket packet = new DatagramPacket(data, data.length, usuario.getDireccion(), usuario.getPuerto());
                 socketEnvio.send(packet);
             }
 
             //manda al ServerLoginHilo el mensaje para cerrarlo
-            InetAddress inetAddress = InetAddress.getByName("localhost");
-            DatagramPacket packet = new DatagramPacket(data, data.length, inetAddress , 7010);
+            DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName("localhost") , 7010);
             socketEnvio.send(packet);
         } catch (IOException e) {
             e.printStackTrace();

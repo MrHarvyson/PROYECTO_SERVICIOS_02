@@ -1,6 +1,7 @@
 package com.vedruna.proyectoServicios02.servidor;
 import com.vedruna.proyectoServicios02.Usuarios;
 import javafx.application.Platform;
+import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -9,10 +10,13 @@ import java.net.InetAddress;
 import java.util.List;
 
 public class ServerLoginHilo implements Runnable {
-    public List<Usuarios> listaUsuarios;
 
-    public ServerLoginHilo(List<Usuarios> listaUsuarios) {
+    private final TextArea txtUsuario;
+    private final List<Usuarios> listaUsuarios;
+
+    public ServerLoginHilo(List<Usuarios> listaUsuarios, TextArea txtUsuario) {
         this.listaUsuarios = listaUsuarios;
+        this.txtUsuario = txtUsuario;
     }
 
     @Override
@@ -23,7 +27,7 @@ public class ServerLoginHilo implements Runnable {
             //Cuando termina el hilo, cierra ventana
             Platform.exit();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -35,21 +39,25 @@ public class ServerLoginHilo implements Runnable {
             byte[] bufer = new byte[1024];
             DatagramPacket usuarioPacket = new DatagramPacket(bufer, bufer.length);
             socketUsuario.receive(usuarioPacket);
-            // nos llega la informacion del login del cliente y la enviamos para crear un usuario nuevo
+            //almacenamos el mensaje que recibimos
+            String mensajeRecibido = new String(usuarioPacket.getData()).trim();
 
-            String mensajeRecibido = new String(usuarioPacket.getData());
-            //ME QUEDE AQUI
-
-
-
-            anadirUsuario(usuarioPacket);
-            for (int i = 0; i < listaUsuarios.size(); i++) {
-                System.out.println(listaUsuarios.get(i).toString());
+            if (mensajeRecibido.equals("Cerrando Servidor")){
+                break;
+            } else if (mensajeRecibido.equalsIgnoreCase("desconectado")){
+                cerrarCliente(usuarioPacket);
+            } else {
+                // nos llega la informacion del login del cliente y la enviamos
+                // para crear un usuario nuevo
+                anadirUsuario(usuarioPacket);
             }
-            System.out.println(listaUsuarios.size());
 
+            txtUsuario.setText("");
+            for (Usuarios usuario : listaUsuarios) {
+                txtUsuario.setText(txtUsuario.getText() + usuario.getNombre() + "\n");
+            }
         }
-
+        socketUsuario.close();
     }
 
     private void anadirUsuario(DatagramPacket recibo) {
@@ -90,12 +98,21 @@ public class ServerLoginHilo implements Runnable {
 
     private boolean comprobarUsuario(String nombreUsuario) {
         boolean existe = false;
-        for (int i = 0; i < listaUsuarios.size(); i++) {
-            if (nombreUsuario.equals(listaUsuarios.get(i).getNombre())) {
+        for (Usuarios usuario : listaUsuarios) {
+            if (nombreUsuario.equals(usuario.getNombre())) {
                 existe = true;
+                break;
             }
         }
         return existe;
     }
 
+    private void cerrarCliente(DatagramPacket cliente){
+        for (Usuarios usuario : listaUsuarios) {
+            if (cliente.getPort() == usuario.getPuerto()) {
+                listaUsuarios.remove(usuario);
+                break;
+            }
+        }
+    }
 }
