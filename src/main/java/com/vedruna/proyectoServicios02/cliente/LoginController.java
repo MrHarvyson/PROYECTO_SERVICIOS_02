@@ -21,7 +21,7 @@ public class LoginController {
     @FXML
     public Button buttonLogin;
     @FXML
-    public TextField nickname;
+    public static TextField nickname;
     @FXML
     public Label labelError;
 
@@ -38,7 +38,7 @@ public class LoginController {
 
     public void botonLogin(ActionEvent actionEvent) {
         if (nickname.getText().equals("")) {
-            System.out.println("introduce");
+            labelError.setText("Introduce un nick");
         } else {
             try {
                 // el login envia al puerto 7010 lso datos del cliente, el server esta escuchando por el
@@ -47,29 +47,24 @@ public class LoginController {
                 byte[] mensajeBytes = nickname.getText().getBytes();
                 DatagramPacket envio = new DatagramPacket(mensajeBytes, mensajeBytes.length, destino, port);
                 socket.send(envio);
+
+                // lee el mensaje que envia servidor para dar respuesta de comprobacion
+                byte[] bufer = new byte[1024];
+                DatagramPacket recibo = new DatagramPacket(bufer, bufer.length);
+                socket.receive(recibo);
+                String paquete = new String(recibo.getData()).trim();
+                if (paquete.equalsIgnoreCase("ok")) {
+                    // si el nombre no se repite y el server nos da el ok abre la pantalla de chat y cierra el login
+                    abrirChat();
+                    cerrarPantalla(actionEvent);
+                } else {
+                    nickname.setText("");
+                    labelError.setText("Ese nick ya existe");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
-        // lee el mensaje que envia servidor para dar respuesta de comprobacion
-        byte[] bufer = new byte[1024];
-        DatagramPacket recibo = new DatagramPacket(bufer, bufer.length);
-        try {
-            socket.receive(recibo);
-            String paquete = new String(recibo.getData()).trim();
-            if (paquete.equalsIgnoreCase("ok")) {
-                // si el nombre no se repite y el server nos da el ok abre la pantalla de chat y cierra el login
-                abrirChat();
-                cerrarPantalla(actionEvent);
-                System.out.println("deberia abrir");
-            } else {
-                System.out.println("no se abre");
-            }
-        } catch (IOException e) {
-            System.out.println("Error al enviar nick.");
-        }
-
     }
 
     private void abrirChat() {
@@ -81,6 +76,14 @@ public class LoginController {
             stage.setTitle("Hello!");
             stage.setScene(scene);
             stage.show();
+            //para cerrar el clientem al pulsar X
+            stage.setOnCloseRequest(windowEvent -> {
+                //elimina el cliente desconectado de la lista del Server
+                eliminarClienteServidor();
+                //cierra el hilo de Escuchar del cliente
+                cerrarHiloCliente();
+                socket.close();
+            });
         } catch (IOException e) {
             System.out.println("Error al abrir chat");
         }
@@ -92,4 +95,28 @@ public class LoginController {
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
+
+    private void eliminarClienteServidor(){
+        try {
+            int port = 7010;
+            String desconectar = "desconectado";
+            byte[] mensajeBytes = desconectar.getBytes();
+            DatagramPacket envio = new DatagramPacket(mensajeBytes, mensajeBytes.length, InetAddress.getByName("localhost"), port);
+            socket.send(envio);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void cerrarHiloCliente(){
+        try {
+            String desconectar = "desconectado";
+            byte[] mensajeBytes = desconectar.getBytes();
+            DatagramPacket envio = new DatagramPacket(mensajeBytes, mensajeBytes.length, InetAddress.getByName("localhost"), socket.getLocalPort());
+            socket.send(envio);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
