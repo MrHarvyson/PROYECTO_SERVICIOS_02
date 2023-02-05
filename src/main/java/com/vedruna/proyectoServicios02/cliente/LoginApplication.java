@@ -15,7 +15,7 @@ public class LoginApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 300, 400);
         stage.setResizable(false);
-        stage.setTitle(LoginController.nickname.getText());
+        //stage.setTitle(LoginController.nickname.getText());
         stage.setScene(scene);
         stage.getIcons().add(new Image("log.png"));
         stage.show();

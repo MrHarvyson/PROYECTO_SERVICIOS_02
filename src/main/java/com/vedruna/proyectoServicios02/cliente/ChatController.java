@@ -8,7 +8,9 @@ import javafx.fxml.Initializable;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -17,14 +19,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.media.Media;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.*;
 import java.util.ResourceBundle;
 
 public class ChatController implements Initializable {
     @FXML
-    public Button botonEnviar;
+    public ImageView botonEnviar;
+    @FXML
+    public ImageView enviarImagen;
     @FXML
 
     private TextField tf_message;
@@ -129,7 +137,7 @@ public class ChatController implements Initializable {
     }
 
     //SOLO FALTA BOTON PARA BUSCAR IMAGEN
-    public void enviarImagen(){
+    public void enviarImagen() {
         FileChooser selectorArchivos = new FileChooser();
         selectorArchivos.setTitle("Enviar Imagen");
         selectorArchivos.getExtensionFilters().addAll(

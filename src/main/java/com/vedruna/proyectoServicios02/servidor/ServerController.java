@@ -22,8 +22,6 @@ public class ServerController implements Initializable {
     public TextArea txtUsuario;
     //FALTA TEXTAREA PARA MOSTRAR LISTA DE CLIENTES
     private final List<Usuarios> listaUsuarios =new LinkedList<Usuarios>();
-    public TextArea txtConsola;
-    public TextArea txtUsuarios;
 
     // al iniciar el servidor crea los dos hilos
     @Override
