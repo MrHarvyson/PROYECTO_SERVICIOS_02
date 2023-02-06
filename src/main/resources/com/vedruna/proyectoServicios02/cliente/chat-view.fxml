@@ -5,45 +5,66 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane hgap="5.0" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #ff8901;" vgap="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vedruna.proyectoServicios02.cliente.ChatController">
+<GridPane hgap="5.0" prefHeight="600.0" prefWidth="300.0" style="-fx-background-color: #515d64; -fx-background-radius: 30;" vgap="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vedruna.proyectoServicios02.cliente.ChatController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints maxHeight="104.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="309.0" minHeight="144.0" prefHeight="270.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="56.0" minHeight="0.0" prefHeight="39.0" vgrow="SOMETIMES" />
+        <RowConstraints prefHeight="40.0" />
+        <RowConstraints vgrow="ALWAYS" />
+        <RowConstraints prefHeight="40.0" />
     </rowConstraints>
     <children>
-        <Label fx:id="labelNick" alignment="CENTER" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="118.0" textAlignment="RIGHT" GridPane.halignment="RIGHT" />
-        <ScrollPane fx:id="sp_main" fitToWidth="true" style="-fx-background-color: #ff8901;" GridPane.rowIndex="1">
-            <content>
-                <VBox fx:id="vbox_message" prefHeight="287.0" prefWidth="245.0" style="-fx-background-color: #ff8901;" />
-            </content>
-        </ScrollPane>
-      <GridPane prefHeight="56.0" prefWidth="261.0" GridPane.rowIndex="2">
+      <GridPane>
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="33.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="178.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="53.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="enviarMensaje" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#enviarMensaje" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+            <ImageView fitHeight="30.0" fitWidth="30.0" onMouseClicked="#cerrar" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                <image>
-                  <Image url="@enviar.png" />
+                  <Image url="@cerrar.png" />
                </image>
             </ImageView>
-              <TextField fx:id="tf_message" prefHeight="25.0" prefWidth="217.0" GridPane.columnIndex="1" />
-            <ImageView fx:id="enviarImagenn" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#enviarImagen" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
-               <image>
-                  <Image url="@enviar.png" />
-               </image>
-            </ImageView>
+            <Label fx:id="labelNombreUsuario" textFill="#fdfdfd" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
+        <ScrollPane fx:id="sp_main" fitToWidth="true" style="-fx-background-color: #515d64;" GridPane.rowIndex="1">
+            <content>
+                <VBox fx:id="vbox_message" minWidth="-Infinity" prefHeight="479.0" prefWidth="258.0" style="-fx-background-color: #515d64;" />
+            </content>
+        </ScrollPane>
+        <GridPane prefHeight="35.0" prefWidth="260.0" GridPane.rowIndex="2">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="40.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="174.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="46.0" />
+            <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #707e86; -fx-background-radius: 30;" GridPane.columnIndex="1" GridPane.columnSpan="3" />
+                <ImageView fx:id="enviarMensaje" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#enviarMensaje" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                    <image>
+                        <Image url="@enviar.png" />
+                    </image>
+                </ImageView>
+                <TextField fx:id="tf_message" prefHeight="26.0" prefWidth="116.0" style="-fx-border-width: 0 0 1 0; -fx-background-color: rgba(0,0,0,0); -fx-border-color: #ff8901; -fx-text-fill: white;" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="15.0" />
+               </GridPane.margin></TextField>
+                <ImageView fx:id="enviarImagenn" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#enviarImagen" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                    <image>
+                        <Image url="@documento.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </GridPane>
     </children>
     <padding>
         <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
