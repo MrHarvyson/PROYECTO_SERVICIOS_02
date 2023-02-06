@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -25,6 +26,8 @@ public class LoginController {
     public TextField nickname;
     @FXML
     public Label labelError;
+    private double x, y;
+
 
     public static DatagramSocket socket;
 
@@ -56,6 +59,7 @@ public class LoginController {
                 String paquete = new String(recibo.getData()).trim();
                 if (paquete.equalsIgnoreCase("ok")) {
                     // si el nombre no se repite y el server nos da el ok abre la pantalla de chat y cierra el login
+                    ChatController.nickRecibido=nickname.getText();
                     abrirChat();
                     cerrarPantalla(actionEvent);
                 } else {
@@ -71,13 +75,27 @@ public class LoginController {
     private void abrirChat() {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("chat-view.fxml"));
         Scene scene = null;
+
         try {
-            scene = new Scene(fxmlLoader.load(), 300, 400);
+            scene = new Scene(fxmlLoader.load(), 300, 600);
             Stage stage = new Stage();
             stage.setTitle(nickname.getText().toUpperCase());
             stage.getIcons().add(new Image("log.png"));
             stage.setScene(scene);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
             stage.setResizable(false);
+            stage.show();
+
+            scene.setOnMousePressed(event -> {
+                x = event.getSceneX();
+                y = event.getSceneY();
+            });
+
+            scene.setOnMouseDragged(event -> {
+                stage.setX(event.getScreenX() - x);
+                stage.setY(event.getScreenY() - y);
+            });
             stage.show();
             //para cerrar el clientem al pulsar X
             stage.setOnCloseRequest(windowEvent -> {
@@ -99,7 +117,7 @@ public class LoginController {
         stage.close();
     }
 
-    private void eliminarClienteServidor(){
+    public static void eliminarClienteServidor(){
         try {
             int port = 7010;
             String desconectar = "desconectado";
@@ -111,7 +129,7 @@ public class LoginController {
         }
     }
 
-    private void cerrarHiloCliente(){
+    public static void cerrarHiloCliente(){
         try {
             String desconectar = "desconectado";
             byte[] mensajeBytes = desconectar.getBytes();
