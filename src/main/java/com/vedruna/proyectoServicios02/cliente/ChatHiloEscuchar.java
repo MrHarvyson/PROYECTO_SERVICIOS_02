@@ -1,6 +1,8 @@
 package com.vedruna.proyectoServicios02.cliente;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -8,8 +10,6 @@ import java.net.DatagramPacket;
 public class ChatHiloEscuchar implements Runnable{
     @FXML
     private final VBox vbox_message;
-
-
 
     public ChatHiloEscuchar(VBox vbox_message) {
         this.vbox_message = vbox_message;
@@ -19,6 +19,8 @@ public class ChatHiloEscuchar implements Runnable{
         escucharMensaje();
         //cierra el socket cuando termina el hilo
         LoginController.socket.close();
+        //para el caso de cerrar a través de stop
+        Platform.exit();
     }
 
     private void escucharMensaje() {

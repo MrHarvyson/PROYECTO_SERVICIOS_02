@@ -53,7 +53,6 @@ public class ChatController implements Initializable {
         //para enviar mensajes con tecla Enter
         tf_message.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-
                 enviarMensaje();
             }
         });
@@ -87,12 +86,11 @@ public class ChatController implements Initializable {
     }
 
     public void mostrarMensaje(String mensaje) {
-        String mess = tf_message.getText();
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setPadding(new Insets(5, 5, 5, 10));
 
-        Text text = new Text(mess);
+        Text text = new Text(mensaje);
         TextFlow textFlow = new TextFlow(text);
 
         textFlow.setStyle("-fx-color: rgb(239,242,255);-fx-background-color: rgb(15,125,242);-fx-background-radius: 20px");
@@ -129,7 +127,7 @@ public class ChatController implements Initializable {
 
     // musicon
     public static void play() {
-        String path = "C:\\Users\\josec\\Documents\\Git\\PROYECTO_SERVICIOS_02\\src\\main\\img\\tono.mp3";
+        String path = "C:\\Users\\alvar\\Documents\\GitHub\\PROYECTO_SERVICIOS_02\\src\\main\\img\\tono.mp3";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
