@@ -2,6 +2,7 @@ package com.vedruna.proyectoServicios02.servidor;
 
 import com.vedruna.proyectoServicios02.Usuarios;
 import com.vedruna.proyectoServicios02.cliente.LoginController;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 
 import java.io.FileOutputStream;
@@ -32,7 +33,7 @@ public class ServerChatHilo implements Runnable{
         try {
             socketRecibo = new DatagramSocket(5010);
             while(true) {
-                byte[] bufer = new byte[1024];
+                byte[] bufer = new byte[15000];
                 DatagramPacket paqueteRecibido = new DatagramPacket(bufer, bufer.length);
                 socketRecibo.receive(paqueteRecibido);
 
@@ -42,6 +43,7 @@ public class ServerChatHilo implements Runnable{
                 //si recibe de un cliente stop, sale del bucle y cierra el servidor
                 if(mensajeRecibido.equalsIgnoreCase("stop")) {
                     cerrarServer();
+                    cerrarClientes();
                     break;
                 } else if (esImagen(mensajeRecibido)) {
                     txtConsola.setText(txtConsola.getText() + "Llegó una imagen a Descargas" + "\n");
@@ -93,6 +95,19 @@ public class ServerChatHilo implements Runnable{
                 DatagramPacket paqueteEnvio = new DatagramPacket(data, data.length, usuarios.getDireccion(), usuarios.getPuerto());
                 socketEnvio.send(paqueteEnvio);
             }
+        }
+        socketEnvio.close();
+    }
+
+    //Cierra todos los clientes en caso de Stop
+    private void cerrarClientes() throws IOException {
+        String desconectar = "desconectado";
+        byte[] data = desconectar.getBytes();
+        DatagramSocket socketEnvio = new DatagramSocket(6010);
+
+        for (Usuarios usuarios : listaUsuarios) {
+            DatagramPacket paqueteEnvio = new DatagramPacket(data, data.length, usuarios.getDireccion(), usuarios.getPuerto());
+            socketEnvio.send(paqueteEnvio);
         }
         socketEnvio.close();
     }
