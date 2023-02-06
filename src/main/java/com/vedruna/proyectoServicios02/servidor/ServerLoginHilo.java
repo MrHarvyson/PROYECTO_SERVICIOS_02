@@ -72,9 +72,7 @@ public class ServerLoginHilo implements Runnable {
             Usuarios usuario = new Usuarios(direccion, puerto, nombreUsuario);
             listaUsuarios.add(usuario);
             mensaje = "ok";
-            System.out.println(usuario.getNombre() + " " + usuario.getPuerto());
         } else {
-            System.out.println("Usuario existe.");
             mensaje = "noOk";
         }
         // enviamos al cliente la comprobacion de que el usuario sea correcto
