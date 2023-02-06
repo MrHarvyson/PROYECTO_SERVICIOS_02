@@ -8,10 +8,12 @@ import javafx.fxml.Initializable;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
@@ -34,12 +36,15 @@ public class ChatController implements Initializable {
     @FXML
     public ImageView enviarImagen;
     @FXML
-
+    public Label labelNombreUsuario;
+    @FXML
     private TextField tf_message;
     @FXML
     private VBox vbox_message;
     @FXML
     private ScrollPane sp_main;
+    public static DatagramSocket socket;
+    public static String nickRecibido;
 
     // cuando el chat se abra se inicia un hilo solo para escuchar lo que le llega del server
     @Override
@@ -48,12 +53,13 @@ public class ChatController implements Initializable {
         Thread hilo = new Thread(chatHiloEscuchar);
         hilo.start();
 
+        labelNombreUsuario.setText(nickRecibido);
+
         sp_main.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
         //para enviar mensajes con tecla Enter
         tf_message.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-
                 enviarMensaje();
             }
         });
@@ -95,7 +101,7 @@ public class ChatController implements Initializable {
         Text text = new Text(mess);
         TextFlow textFlow = new TextFlow(text);
 
-        textFlow.setStyle("-fx-color: rgb(239,242,255);-fx-background-color: rgb(15,125,242);-fx-background-radius: 20px");
+        textFlow.setStyle("-fx-color: rgb(239,242,255);-fx-background-color: rgb(15,125,242);-fx-background-radius: 5px");
         textFlow.setPadding(new Insets(5, 10, 5, 10));
         text.setFill(Color.color(0.934, 0.945, 0.996));
 
@@ -114,7 +120,7 @@ public class ChatController implements Initializable {
         Text text = new Text(paquete);
         TextFlow textFlow = new TextFlow(text);
 
-        textFlow.setStyle("-fx-color: rgb(239,242,255);-fx-background-color: rgb(159,159,159);-fx-background-radius: 20px;-fx-text-fill:rgb(15,125,242) ");
+        textFlow.setStyle("-fx-color: rgb(239,242,255);-fx-background-color: rgb(159,159,159);-fx-background-radius: 5px;-fx-text-fill:rgb(15,125,242) ");
         textFlow.setPadding(new Insets(5, 10, 5, 10));
         text.setFill(Color.color(0.934, 0.945, 0.996));
 
@@ -129,11 +135,19 @@ public class ChatController implements Initializable {
 
     // musicon
     public static void play() {
-        String path = "C:\\Users\\josec\\Documents\\Git\\PROYECTO_SERVICIOS_02\\src\\main\\img\\tono.mp3";
+        String path = "src/main/resources/com/vedruna/proyectoServicios02/musica/tono.mp3";
         Media media = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
 
+    }
+
+    public void cerrar(MouseEvent e){
+        LoginController.eliminarClienteServidor();
+        LoginController.cerrarHiloCliente();
+        Node source = (Node) e.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 
     //SOLO FALTA BOTON PARA BUSCAR IMAGEN
