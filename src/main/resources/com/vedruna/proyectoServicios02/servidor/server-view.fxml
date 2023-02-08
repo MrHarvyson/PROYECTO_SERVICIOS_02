@@ -83,7 +83,7 @@
             </AnchorPane>
               <AnchorPane fx:id="ApUsuario" layoutX="31.0" prefHeight="312.0" prefWidth="545.0" style="-fx-background-color: #515d64;" visible="false">
                <children>
-                  <TextArea fx:id="txtUsuario" editable="false" prefHeight="312.0" prefWidth="545.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00; " text="Terminal" />
+                  <TextArea fx:id="txtUsuario" editable="false" prefHeight="312.0" prefWidth="545.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00; " text="Usuarios..." />
                </children>
             </AnchorPane>
          </children></AnchorPane>

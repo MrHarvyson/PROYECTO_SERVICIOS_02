@@ -175,11 +175,12 @@ public class ChatController implements Initializable {
                 InetAddress destino = InetAddress.getByName("localhost");
                 DatagramPacket envio = new DatagramPacket(imagenBytes, imagenBytes.length, destino, port);
                 LoginController.socket.send(envio);
+                mostrarMensaje("imagen enviada");
             } catch (IOException e) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("No se pudo enviar imagen");
                 alert.setHeaderText(null);
-                alert.setContentText("No puedes enviar esta imagen. Elige una más pequeña.");
+                alert.setContentText("No puedes enviar esta imagen. Debe ser inferior a 15000 Bytes.");
                 alert.showAndWait();
             } finally {
                 if (imagenAEnviar != null) {
