@@ -28,7 +28,8 @@ public class ServerController implements Initializable {
     //muestra los usuarios conectados
     @FXML
     public AnchorPane ApSistema,ApUsuario,ApTotal;
-    public boolean ver = false;
+    public boolean verSistema = true;
+    public boolean verUsuario = true;
 
 
     //FALTA TEXTAREA PARA MOSTRAR LISTA DE CLIENTES
@@ -52,30 +53,30 @@ public class ServerController implements Initializable {
         hilo2.start();
 
     }
-/*
-    public void handle(javafx.scene.input.MouseEvent mouseEvent) {
-        if(mouseEvent.getTarget() == sistema){
-            ApConsola.setVisible(true);
-            ApUsuario.setVisible(false);
+
+    public void clickSistema(MouseEvent mouseEvent) {
+        if(!verSistema){
+            ApSistema.setVisible(false);
+            verSistema = true;
         }else{
-            if(mouseEvent.getTarget() == usuario){
-                ApConsola.setVisible(false);
-                ApUsuario.setVisible(true);
-            }
+            ApSistema.setVisible(true);
+            ApUsuario.setVisible(false);
+            verSistema = false;
+            verUsuario = true;
         }
 
     }
 
- */
-
-    public void clickSistema(MouseEvent mouseEvent) {
-        ApSistema.setVisible(true);
-        ApUsuario.setVisible(false);
-    }
-
     public void clickUsuario(MouseEvent mouseEvent) {
-        ApSistema.setVisible(false);
-        ApUsuario.setVisible(true);
+        if(!verUsuario){
+            ApUsuario.setVisible(false);
+            verUsuario = true;
+        }else{
+            ApUsuario.setVisible(true);
+            ApSistema.setVisible(false);
+            verSistema = true;
+            verUsuario = false;
+        }
     }
 
     public void clickCerrar(MouseEvent mouseEvent) {
@@ -84,14 +85,4 @@ public class ServerController implements Initializable {
         stage.close();
     }
 
-    public void clickMinimizar(MouseEvent mouseEvent) {
-        if(!ver){
-            ApTotal.setVisible(false);
-            ver=true;
-        }else{
-            ApTotal.setVisible(true);
-            ver=false;
-        }
-
-    }
 }
