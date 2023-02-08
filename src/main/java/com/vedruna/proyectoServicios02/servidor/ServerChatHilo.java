@@ -4,6 +4,7 @@ import com.vedruna.proyectoServicios02.Usuarios;
 import com.vedruna.proyectoServicios02.cliente.LoginController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -72,7 +73,7 @@ public class ServerChatHilo implements Runnable{
     }
 
     private boolean esImagen(String mensaje) {
-        return mensaje.contains("�PNG") || mensaje.contains("�JPG");
+        return mensaje.contains("�");
     }
 
     private String obtenerNick(int port) {

@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
@@ -163,6 +164,7 @@ public class ChatController implements Initializable {
         Scene scene = new Scene(vBox, 960, 600);
         stage.setScene(scene);
         File imagen = selectorArchivos.showOpenDialog(stage);
+
         if (imagen != null) {
             FileInputStream imagenAEnviar = null;
             try {

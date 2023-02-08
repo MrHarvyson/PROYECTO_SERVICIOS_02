@@ -2,6 +2,7 @@ package com.vedruna.proyectoServicios02.servidor;
 import com.vedruna.proyectoServicios02.Usuarios;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
