@@ -9,6 +9,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.*;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,7 +40,7 @@ public class ServerController implements Initializable {
         txtSistema.setText("<<<<<-----   SERVIDOR LEVANTADO   ----->>>>>\n");
 
         // un hilo para escuchar los usuarios que se loggean
-        ServerLoginHilo serverLoginHilo = new ServerLoginHilo(listaUsuarios, txtUsuario);
+        ServerLoginHilo serverLoginHilo = new ServerLoginHilo(listaUsuarios, txtUsuario, txtSistema);
         Thread hilo = new Thread(serverLoginHilo);
         hilo.start();
 
@@ -75,7 +79,27 @@ public class ServerController implements Initializable {
     public void clickCerrar(MouseEvent mouseEvent) {
         Node source = (Node) mouseEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
+        cerrarServidor();
         stage.close();
     }
 
+    private void cerrarServidor() {
+        DatagramSocket socketEnvio = null;
+        try {
+            socketEnvio = new DatagramSocket();
+            int port = 5010;
+            InetAddress inetAddress = InetAddress.getByName("localhost");
+            //al mandar stop, saca a ServerChatHilo del bucle
+            String mensaje = "Stop";
+            byte[] data = mensaje.getBytes();
+            DatagramPacket packet = new DatagramPacket(data, data.length, inetAddress, port);
+            socketEnvio.send(packet);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (socketEnvio != null) {
+                socketEnvio.close();
+            }
+        }
+    }
 }

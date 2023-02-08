@@ -1,5 +1,6 @@
 package com.vedruna.proyectoServicios02.servidor;
 import com.vedruna.proyectoServicios02.Usuarios;
+import com.vedruna.proyectoServicios02.cliente.ChatController;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -13,11 +14,13 @@ import java.util.List;
 public class ServerLoginHilo implements Runnable {
 
     private final TextArea txtUsuario;
+    private final TextArea txtSistema;
     private final List<Usuarios> listaUsuarios;
 
-    public ServerLoginHilo(List<Usuarios> listaUsuarios, TextArea txtUsuario) {
+    public ServerLoginHilo(List<Usuarios> listaUsuarios, TextArea txtUsuario, TextArea txtSistema) {
         this.listaUsuarios = listaUsuarios;
         this.txtUsuario = txtUsuario;
+        this.txtSistema = txtSistema;
     }
 
     @Override
@@ -46,6 +49,7 @@ public class ServerLoginHilo implements Runnable {
             if (mensajeRecibido.equals("Cerrando Servidor")){
                 break;
             } else if (mensajeRecibido.equalsIgnoreCase("desconectado")){
+                txtSistema.setText(txtSistema.getText() + "[" + usuarioPacket.getSocketAddress() + "] " + sacarUsuario(usuarioPacket.getPort()) + " se ha desconectado."+ "\n");
                 cerrarCliente(usuarioPacket);
             } else {
                 // nos llega la informacion del login del cliente y la enviamos
@@ -113,5 +117,16 @@ public class ServerLoginHilo implements Runnable {
                 break;
             }
         }
+    }
+
+    private String sacarUsuario(int port){
+        String nick = "";
+        for (Usuarios user: listaUsuarios) {
+            if (user.getPuerto() == port){
+                nick = user.getNombre();
+                break;
+            }
+        }
+        return nick;
     }
 }
