@@ -60,7 +60,7 @@ public class ServerChatHilo implements Runnable{
                     String mensajeFinal = clienteNick + ": " + mensajeRecibido;
                     //enviamos el mensaje
                     enviarMensajes(mensajeFinal, puertoMensajeRecibido);
-                    txtSistema.setText(txtSistema.getText() + "[" + paqueteRecibido.getSocketAddress() + "] " + clienteNick + " a enviado un mensaje."+ "\n");
+                    txtSistema.setText(txtSistema.getText() + "[" + paqueteRecibido.getSocketAddress() + "] " + clienteNick + " ha enviado un mensaje."+ "\n");
                 }
 
             }
