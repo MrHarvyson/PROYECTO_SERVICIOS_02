@@ -77,7 +77,7 @@ public class LoginController {
         Scene scene = null;
 
         try {
-            scene = new Scene(fxmlLoader.load(), 300, 600);
+            scene = new Scene(fxmlLoader.load(), 600, 400);
             Stage stage = new Stage();
             stage.setTitle(nickname.getText().toUpperCase());
             stage.getIcons().add(new Image("log.png"));

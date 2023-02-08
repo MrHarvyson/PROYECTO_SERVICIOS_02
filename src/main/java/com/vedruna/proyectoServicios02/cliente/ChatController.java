@@ -38,6 +38,7 @@ public class ChatController implements Initializable {
     public ImageView enviarImagen;
     @FXML
     public Label labelNombreUsuario;
+    public ImageView enviarImagenn;
     @FXML
     private TextField tf_message;
     @FXML
@@ -54,7 +55,7 @@ public class ChatController implements Initializable {
         Thread hilo = new Thread(chatHiloEscuchar);
         hilo.start();
 
-        labelNombreUsuario.setText(nickRecibido);
+        labelNombreUsuario.setText(nickRecibido.toUpperCase());
 
         sp_main.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 

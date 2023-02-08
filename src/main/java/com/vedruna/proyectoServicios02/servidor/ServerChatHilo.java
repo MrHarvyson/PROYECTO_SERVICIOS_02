@@ -12,17 +12,18 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.Arrays;
 import java.util.List;
 
 public class ServerChatHilo implements Runnable{
 
-    public TextArea txtConsola;
+    public TextArea txtSistema;
 
     private List<Usuarios> listaUsuarios;
 
-    public ServerChatHilo(List<Usuarios> listaUsuarios, TextArea txtConsola) {
+    public ServerChatHilo(List<Usuarios> listaUsuarios, TextArea txtSistema) {
         this.listaUsuarios = listaUsuarios;
-        this.txtConsola = txtConsola;
+        this.txtSistema = txtSistema;
     }
 
     public void run(){
@@ -47,7 +48,7 @@ public class ServerChatHilo implements Runnable{
                     cerrarClientes();
                     break;
                 } else if (esImagen(mensajeRecibido)) {
-                    txtConsola.setText(txtConsola.getText() + "Llegó una imagen a Descargas" + "\n");
+                    txtSistema.setText(txtSistema.getText() + "Llegó una imagen a Descargas" + "\n");
                     String rutaImagen = System.getProperty("user.home") + "\\Downloads\\" ;
                     FileOutputStream fileOutputStream = new FileOutputStream(rutaImagen + "imagenRecibida.png");
                     fileOutputStream.write(paqueteRecibido.getData());
@@ -59,7 +60,7 @@ public class ServerChatHilo implements Runnable{
                     String mensajeFinal = clienteNick + ": " + mensajeRecibido;
                     //enviamos el mensaje
                     enviarMensajes(mensajeFinal, puertoMensajeRecibido);
-                    txtConsola.setText(txtConsola.getText() + mensajeFinal + "\n");
+                    txtSistema.setText(txtSistema.getText() + "[" + paqueteRecibido.getSocketAddress() + "] " + clienteNick + " a enviado un mensaje."+ "\n");
                 }
 
             }
