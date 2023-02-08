@@ -48,9 +48,9 @@ public class ServerChatHilo implements Runnable{
                     cerrarClientes();
                     break;
                 } else if (esImagen(mensajeRecibido)) {
-                    txtSistema.setText(txtSistema.getText() + "Llegó una imagen a Descargas" + "\n");
+                    txtSistema.setText(txtSistema.getText() + "Llegó una imagen a Descargas de " + obtenerNick(puertoMensajeRecibido) + "\n");
                     String rutaImagen = System.getProperty("user.home") + "\\Downloads\\" ;
-                    FileOutputStream fileOutputStream = new FileOutputStream(rutaImagen + "imagenRecibida.png");
+                    FileOutputStream fileOutputStream = new FileOutputStream(rutaImagen + "imagenRecibidaDe" + obtenerNick(puertoMensajeRecibido) + ".png");
                     fileOutputStream.write(paqueteRecibido.getData());
                     //fileOutputStream.close();   CERRAMOS FLUJO
                 } else { //si no es un mensaje de cierre o imagen, reenvia los mensajes
