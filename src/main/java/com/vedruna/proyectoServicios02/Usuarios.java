@@ -19,28 +19,16 @@ public class Usuarios {
         return direccion;
     }
 
-    public void setDireccion(InetAddress direccion) {
-        this.direccion = direccion;
-    }
-
     public Integer getPuerto() {
         return puerto;
-    }
-
-    public void setPuerto(Integer puerto) {
-        this.puerto = puerto;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     @Override
     public String toString() {
-        return "Usuario= " + nombre + ", direccion=" + direccion + ", puerto=" + puerto ;
+        return "Usuario= " + nombre + ", direccion=" + direccion + ", puerto=" + puerto;
     }
 }

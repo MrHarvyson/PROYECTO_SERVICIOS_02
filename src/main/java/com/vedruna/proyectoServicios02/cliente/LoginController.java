@@ -27,8 +27,6 @@ public class LoginController {
     @FXML
     public Label labelError;
     private double x, y;
-
-
     public static DatagramSocket socket;
 
     static {
@@ -40,6 +38,7 @@ public class LoginController {
         }
     }
 
+    // login para crear usuario
     public void botonLogin(ActionEvent actionEvent) {
         if (nickname.getText().equals("")) {
             labelError.setText("Introduce un nick");
@@ -51,7 +50,6 @@ public class LoginController {
                 byte[] mensajeBytes = nickname.getText().getBytes();
                 DatagramPacket envio = new DatagramPacket(mensajeBytes, mensajeBytes.length, destino, port);
                 socket.send(envio);
-
                 // lee el mensaje que envia servidor para dar respuesta de comprobacion
                 byte[] bufer = new byte[1024];
                 DatagramPacket recibo = new DatagramPacket(bufer, bufer.length);
@@ -59,7 +57,7 @@ public class LoginController {
                 String paquete = new String(recibo.getData()).trim();
                 if (paquete.equalsIgnoreCase("ok")) {
                     // si el nombre no se repite y el server nos da el ok abre la pantalla de chat y cierra el login
-                    ChatController.nickRecibido=nickname.getText();
+                    ChatController.nickRecibido = nickname.getText();
                     abrirChat();
                     cerrarPantalla(actionEvent);
                 } else {
@@ -72,6 +70,7 @@ public class LoginController {
         }
     }
 
+    // es caso todo correcto entra siguiente ventana
     private void abrirChat() {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("chat-view.fxml"));
         Scene scene = null;
@@ -111,13 +110,14 @@ public class LoginController {
 
     }
 
+
     private void cerrarPantalla(ActionEvent e) {
         Node source = (Node) e.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
 
-    public static void eliminarClienteServidor(){
+    public static void eliminarClienteServidor() {
         try {
             int port = 7010;
             String desconectar = "desconectado";
@@ -129,7 +129,7 @@ public class LoginController {
         }
     }
 
-    public static void cerrarHiloCliente(){
+    public static void cerrarHiloCliente() {
         try {
             String desconectar = "desconectado";
             byte[] mensajeBytes = desconectar.getBytes();
@@ -139,5 +139,6 @@ public class LoginController {
             e.printStackTrace();
         }
     }
+
 
 }

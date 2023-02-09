@@ -2,18 +2,19 @@ package com.vedruna.proyectoServicios02.cliente;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 
-public class ChatHiloEscuchar implements Runnable{
+public class ChatHiloEscuchar implements Runnable {
     @FXML
     private final VBox vbox_message;
 
     public ChatHiloEscuchar(VBox vbox_message) {
         this.vbox_message = vbox_message;
     }
+
     @Override
     public void run() {
         escucharMensaje();
@@ -23,6 +24,7 @@ public class ChatHiloEscuchar implements Runnable{
         Platform.exit();
     }
 
+    // escucha al servidor que le envie mensajes de otros clientes
     private void escucharMensaje() {
         while (true) {
             try {
@@ -32,17 +34,13 @@ public class ChatHiloEscuchar implements Runnable{
                 LoginController.socket.receive(recibo);
                 String paquete = new String(recibo.getData()).trim();
                 //si se cierra el chat, acaba el hilo
-                if ("desconectado".equals(paquete)){
+                if ("desconectado".equals(paquete)) {
                     break;
                 }
-
-                ChatController.mostrarMensaje2(paquete,vbox_message);
+                ChatController.mostrarMensaje2(paquete, vbox_message);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
-
-
-
 }
