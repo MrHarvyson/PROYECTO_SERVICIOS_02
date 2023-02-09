@@ -5,40 +5,32 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.scene.media.Media;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.*;
 import java.util.ResourceBundle;
+import static javafx.scene.paint.Color.rgb;
 
 public class ChatController implements Initializable {
-    @FXML
-    public ImageView botonEnviar;
-    @FXML
-    public ImageView enviarImagen;
+
     @FXML
     public Label labelNombreUsuario;
-    public ImageView enviarImagenn;
     @FXML
     private TextField tf_message;
     @FXML
@@ -94,6 +86,7 @@ public class ChatController implements Initializable {
         }
     }
 
+    // forma en la que muestra mensajes en uno mismo
     public void mostrarMensaje(String mensaje) {
         HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_RIGHT);
@@ -102,9 +95,9 @@ public class ChatController implements Initializable {
         Text text = new Text(mensaje);
         TextFlow textFlow = new TextFlow(text);
 
-        textFlow.setStyle("-fx-color: rgb(239,242,255);-fx-background-color: rgb(15,125,242);-fx-background-radius: 5px");
+        textFlow.setStyle("-fx-background-color: rgb(15,125,242);-fx-background-radius: 5px");
         textFlow.setPadding(new Insets(5, 10, 5, 10));
-        text.setFill(Color.color(0.934, 0.945, 0.996));
+        text.setFill(rgb(211, 211, 211));
 
         hBox.getChildren().add(textFlow);
         vbox_message.getChildren().add(hBox);
@@ -112,6 +105,7 @@ public class ChatController implements Initializable {
         tf_message.clear();
     }
 
+    // forma en la que muestra mensajes que le llega
     public static void mostrarMensaje2(String paquete, VBox vbox) {
         play();
         HBox hBox = new HBox();
@@ -121,9 +115,9 @@ public class ChatController implements Initializable {
         Text text = new Text(paquete);
         TextFlow textFlow = new TextFlow(text);
 
-        textFlow.setStyle("-fx-color: rgb(239,242,255);-fx-background-color: rgb(159,159,159);-fx-background-radius: 5px;-fx-text-fill:rgb(15,125,242) ");
+        textFlow.setStyle("-fx-background-color: rgb(211,211,211);-fx-background-radius: 5px;");
         textFlow.setPadding(new Insets(5, 10, 5, 10));
-        text.setFill(Color.color(0.934, 0.945, 0.996));
+        text.setFill(rgb(15, 125, 242));
 
         hBox.getChildren().add(textFlow);
         Platform.runLater(new Runnable() {
@@ -144,7 +138,8 @@ public class ChatController implements Initializable {
 
     }
 
-    public void cerrar(MouseEvent e){
+    // boton cerrar ventana
+    public void cerrar(MouseEvent e) {
         LoginController.eliminarClienteServidor();
         LoginController.cerrarHiloCliente();
         Node source = (Node) e.getSource();
@@ -152,7 +147,7 @@ public class ChatController implements Initializable {
         stage.close();
     }
 
-    //SOLO FALTA BOTON PARA BUSCAR IMAGEN
+    // boton enviar imagen
     public void enviarImagen() {
         FileChooser selectorArchivos = new FileChooser();
         selectorArchivos.setTitle("Enviar Imagen");

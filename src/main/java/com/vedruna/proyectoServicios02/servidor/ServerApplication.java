@@ -3,9 +3,9 @@ package com.vedruna.proyectoServicios02.servidor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -19,11 +19,13 @@ public class ServerApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         stage.initStyle(StageStyle.TRANSPARENT);
         scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
-        stage.setTitle("Hello!");
+        stage.setTitle("SERVER");
+        stage.getIcons().add(new Image("log.png"));
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
 
+        // click y mover ventana
         scene.setOnMousePressed(event -> {
             x = event.getSceneX();
             y = event.getSceneY();
@@ -34,13 +36,13 @@ public class ServerApplication extends Application {
             stage.setY(event.getScreenY() - y);
         });
 
-        //si pulsamos el botón de cerrar ventana, cierra el server
+        // si pulsamos el botón de cerrar ventana, cierra el server
         stage.setOnCloseRequest(windowEvent -> {
             cerrarServidor();
         });
     }
 
-    //manda mensaje al hilo para que se cierre
+    // manda mensaje al hilo para que se cierre
     private void cerrarServidor() {
         DatagramSocket socketEnvio = null;
         try {
@@ -64,4 +66,5 @@ public class ServerApplication extends Application {
     public static void main(String[] args) {
         launch();
     }
+
 }

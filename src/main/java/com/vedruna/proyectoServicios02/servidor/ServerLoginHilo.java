@@ -1,10 +1,9 @@
 package com.vedruna.proyectoServicios02.servidor;
-import com.vedruna.proyectoServicios02.Usuarios;
-import com.vedruna.proyectoServicios02.cliente.ChatController;
-import javafx.application.Platform;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 
+import com.vedruna.proyectoServicios02.Usuarios;
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -13,8 +12,8 @@ import java.util.List;
 
 public class ServerLoginHilo implements Runnable {
 
-    private final TextArea txtUsuario;
-    private final TextArea txtSistema;
+    @FXML
+    private final TextArea txtUsuario,txtSistema;
     private final List<Usuarios> listaUsuarios;
 
     public ServerLoginHilo(List<Usuarios> listaUsuarios, TextArea txtUsuario, TextArea txtSistema) {
@@ -26,12 +25,12 @@ public class ServerLoginHilo implements Runnable {
     @Override
     public void run() {
         try {
-            //Crea usuarios o cierra hilo
+            // Crea usuarios y los desconecta
             crearUsuarios();
-            //Cuando termina el hilo, cierra ventana
+            // Cuando termina el hilo, cierra ventana
             Platform.exit();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("ERROR al crear o desconectar usuario");
         }
     }
 
@@ -45,18 +44,16 @@ public class ServerLoginHilo implements Runnable {
             socketUsuario.receive(usuarioPacket);
             //almacenamos el mensaje que recibimos
             String mensajeRecibido = new String(usuarioPacket.getData()).trim();
-
-            if (mensajeRecibido.equals("Cerrando Servidor")){
+            if (mensajeRecibido.equals("Cerrando Servidor")) {
                 break;
-            } else if (mensajeRecibido.equalsIgnoreCase("desconectado")){
-                txtSistema.setText(txtSistema.getText() + "[" + usuarioPacket.getSocketAddress() + "] " + sacarUsuario(usuarioPacket.getPort()) + " se ha desconectado."+ "\n");
+            } else if (mensajeRecibido.equalsIgnoreCase("desconectado")) { // si cierra un cliente el chat
+                txtSistema.setText(txtSistema.getText() + "[" + usuarioPacket.getSocketAddress() + "] " + sacarUsuario(usuarioPacket.getPort()) + " se ha desconectado." + "\n");
                 cerrarCliente(usuarioPacket);
             } else {
                 // nos llega la informacion del login del cliente y la enviamos
                 // para crear un usuario nuevo
                 anadirUsuario(usuarioPacket);
             }
-
             txtUsuario.setText("");
             for (Usuarios usuario : listaUsuarios) {
                 txtUsuario.setText(txtUsuario.getText() + usuario.getNombre() + "\n");
@@ -70,12 +67,14 @@ public class ServerLoginHilo implements Runnable {
         String nombreUsuario = new String(recibo.getData()).trim();
         InetAddress direccion = recibo.getAddress();
         int puerto = recibo.getPort();
-
         String mensaje;
+
         // comprobamos si existe el usuario ya
-        if(!comprobarUsuario(nombreUsuario)){
+        if (!comprobarUsuario(nombreUsuario)) {
+            // creamos el usuario
             Usuarios usuario = new Usuarios(direccion, puerto, nombreUsuario);
             listaUsuarios.add(usuario);
+            txtSistema.setText(txtSistema.getText() + "[" + recibo.getSocketAddress() + "] " + "Se ha conectado " + sacarUsuario(recibo.getPort()) + ".\n");
             mensaje = "ok";
         } else {
             mensaje = "noOk";
@@ -84,7 +83,7 @@ public class ServerLoginHilo implements Runnable {
         envioComprobacion(mensaje, recibo);
     }
 
-    private void envioComprobacion(String mensaje,DatagramPacket recibo) {
+    private void envioComprobacion(String mensaje, DatagramPacket recibo) {
         byte[] data = mensaje.getBytes();
         DatagramSocket socketEnvio = null;
         try {
@@ -110,7 +109,7 @@ public class ServerLoginHilo implements Runnable {
         return existe;
     }
 
-    private void cerrarCliente(DatagramPacket cliente){
+    private void cerrarCliente(DatagramPacket cliente) {
         for (Usuarios usuario : listaUsuarios) {
             if (cliente.getPort() == usuario.getPuerto()) {
                 listaUsuarios.remove(usuario);
@@ -119,10 +118,10 @@ public class ServerLoginHilo implements Runnable {
         }
     }
 
-    private String sacarUsuario(int port){
+    private String sacarUsuario(int port) {
         String nick = "";
-        for (Usuarios user: listaUsuarios) {
-            if (user.getPuerto() == port){
+        for (Usuarios user : listaUsuarios) {
+            if (user.getPuerto() == port) {
                 nick = user.getNombre();
                 break;
             }

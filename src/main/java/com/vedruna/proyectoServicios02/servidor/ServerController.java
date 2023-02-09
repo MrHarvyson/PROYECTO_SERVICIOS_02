@@ -28,8 +28,6 @@ public class ServerController implements Initializable {
     public boolean verSistema = true;
     public boolean verUsuario = true;
 
-
-    //FALTA TEXTAREA PARA MOSTRAR LISTA DE CLIENTES
     private final List<Usuarios> listaUsuarios =new LinkedList<Usuarios>();
     @FXML
     public ImageView sistema,usuario,cerrar,minimizar;
@@ -51,6 +49,7 @@ public class ServerController implements Initializable {
 
     }
 
+    // para la parte visual
     public void clickSistema(MouseEvent mouseEvent) {
         if(!verSistema){
             ApSistema.setVisible(false);
@@ -61,9 +60,9 @@ public class ServerController implements Initializable {
             verSistema = false;
             verUsuario = true;
         }
-
     }
 
+    // para la parte visual
     public void clickUsuario(MouseEvent mouseEvent) {
         if(!verUsuario){
             ApUsuario.setVisible(false);
@@ -76,6 +75,7 @@ public class ServerController implements Initializable {
         }
     }
 
+    // para la parte visual
     public void clickCerrar(MouseEvent mouseEvent) {
         Node source = (Node) mouseEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
@@ -83,6 +83,7 @@ public class ServerController implements Initializable {
         stage.close();
     }
 
+    // para la parte visual
     private void cerrarServidor() {
         DatagramSocket socketEnvio = null;
         try {
