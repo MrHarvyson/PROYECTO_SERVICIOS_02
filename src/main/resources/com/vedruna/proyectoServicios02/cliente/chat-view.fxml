@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane hgap="5.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #515d64; -fx-background-radius: 30;" vgap="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vedruna.proyectoServicios02.cliente.ChatController">
+<GridPane hgap="5.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #515d64; -fx-background-radius: 15;" vgap="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vedruna.proyectoServicios02.cliente.ChatController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" />
     </columnConstraints>
@@ -16,7 +16,7 @@
         <RowConstraints prefHeight="40.0" />
     </rowConstraints>
     <children>
-      <GridPane>
+      <GridPane style="-fx-border-width: 0 0 1 0; -fx-border-color: #ff8901;">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.0" minWidth="0.0" prefWidth="0.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="374.0" minWidth="10.0" prefWidth="374.0" />
