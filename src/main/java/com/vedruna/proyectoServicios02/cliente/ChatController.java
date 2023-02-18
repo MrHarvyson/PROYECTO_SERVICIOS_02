@@ -81,7 +81,7 @@ public class ChatController implements Initializable {
                 LoginController.socket.send(envio);
                 mostrarMensaje(mensaje);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.out.println("ERROR" + e);
             }
         }
     }
@@ -182,7 +182,7 @@ public class ChatController implements Initializable {
                     try {
                         imagenAEnviar.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        System.out.println("ERROR" + e);
                     }
                 }
             }

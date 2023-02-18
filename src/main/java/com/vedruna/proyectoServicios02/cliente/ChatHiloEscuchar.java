@@ -39,7 +39,7 @@ public class ChatHiloEscuchar implements Runnable {
                 }
                 ChatController.mostrarMensaje2(paquete, vbox_message);
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("ERROR" + e);
             }
         }
     }
